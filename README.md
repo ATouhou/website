@@ -1,51 +1,43 @@
 # sunnah-website
-This is the front end code for sunnah.com . It is built atop the Yii MVC framework.
+This is the front end code for [sunnah.com](https://sunnah.com). It is built atop the Yii 2 MVC framework.
 
-The top level structure is divided into application code (application folder) that includes MVC code and the public folder which contains index.php, css, js, etc. Your webserver should point to the public folder. The Yii framework code needs to reside on the machine as well; its location is hardcoded into public/index.php .
+The top level structure is divided into application code (in the `application` folder) that includes MVC code and the `public` folder which contains `index.php`, `css`, `js`, and others. 
 
-Under the applications folder, here are the important locations:
+Your webserver should point to the public folder. The Yii framework code needs to reside on the machine as well; its location is hardcoded into `public/index.php`.
 
-config/main.php : All the configuration options, including URL routes, database connections, etc.
+Under the `application` folder, here are the important locations:
 
-Yii divides its MVC stuff into "modules" that share code. Think of them as sections of a website. For example, an admin section vs. a public section. 
-
-modules/default/controllers: All controller classes. There are three main controllers: the search page, the index and sitewide pages, and the collection controller which includes actions for displaying collections, books, and ahadith.
-
-modules/default/models: All model classes. Each kind of object has a model class. E.g. hadith, book, collection.
-
-modules/default/views: Each controller has actions which have view code. This folder contains the view code.
-
-modules/default/views/layouts: Other view code corresponding to side menus, search box, widgets, etc.
-
-modules/views: Sitewide view code like column layout, footer.
-
-modules/views/site: Not used. This folder is for view code that needs to be the same across modules.
-
-## Running on windows
-
-* Install PHP 5.6
-* [Download](http://windows.php.net/downloads/pecl/releases/memcache/3.0.8/) and copy the memcache extension
-* [Download](http://s3.amazonaws.com/downloads.northscale.com/memcached-win32-1.4.4-14.zip) and install memcache
-* Create an iis website and point it to the public folder
-* Add the index.php file as default document
-* Add handler mapping for .php files in iis
-* [Download](https://dev.mysql.com/downloads/windows/) and install mysql for windows
-* Import the sample db in mysql
-* [Download](https://getcomposer.org/download/) and install composer
-* Run `install` comand of composer in the root dir
-* Visit the localhost url to see the site running   
+* `config/main.php` : All the configuration options, including URL routes, database connections, etc.
+* Yii divides its MVC code into "modules" that share code. Think of them as sections of a website. For example, an admin section vs. a public section. 
+* `modules/front/controllers`: All controller classes. There are three main controllers: the search page, the index and sitewide pages, and the collection controller which includes actions for displaying collections, books, and ahadith.
+* `modules/front/models`: All model classes. Each kind of object has a model class. E.g. hadith, book, collection.
+* `modules/front/views`: Each controller has actions which have view code. This folder contains the view code.
+* `modules/front/views/layouts`: Other view code corresponding to side menus, search box, widgets, etc.
+* `views/layouts`: Sitewide view code like column layout, footer.
 
 
-## Launching the Dev Container
+## Running on Windows
 
-Launching the dev container is composed of two simple commands. First, building the image, then running it.
+* Install PHP 7.3
+* Create an IIS website and point it to the `public` folder
+* Add the `index.php` file as default document
+* Add handler mapping for `.php` files in iis
+* Download and install [MySQL for Windows](https://dev.mysql.com/downloads/windows/)
+* Import the sample db in MySQL
+* Download and install [Composer](https://getcomposer.org/download/)
+* Run the `install` comand of composer in the root dir
+* Visit localhost in a browser to see the site running   
 
-In order to build the image, run the following command in the same directory as the Dockerfile:
 
-`docker build -t {username}/{imagename} .`
+## Working with the Dev Container
+If you don't want to set up a complete dev environment on your host, you can use a Docker container to host the PHP environment, dependencies, and web server. The source code is mounted as a volume inside the container, so any changes will reflect immediately inside the container without having to rebuild it.
 
-Once the docker image builds, run it by doing the following:
+Launching the dev container is composed of a simple `docker-compose` command. First however, copy the `.env.local.sample` file to `.env.local` (**important**). Then run the following command in the same directory as the Dockerfile:
 
-`docker run -d -p 80:80 {username}/{imagename}` 
+`docker-compose up --build`
 
-If you've used the ports above, you should be able to access the webserver using port 80 on the container's host.
+You should then be able to access the webserver using port 80 on the container's host.
+
+Use [Visual Studio Code](https://code.visualstudio.com/) with [Remote Containers](https://code.visualstudio.com/docs/remote/containers) extensions to attach to running instance and try out changes rapidly.
+
+Use the [php cs fixer](https://marketplace.visualstudio.com/items?itemName=makao.phpcsfixer) extension for formatting code.

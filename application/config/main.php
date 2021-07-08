@@ -1,187 +1,282 @@
 <?php
 
-// uncomment the following to define a path alias
-// Yii::setPathOfAlias('local','path/to/local-folder');
+use \yii\web\UrlNormalizer;
 
-// This is the main Web application configuration. Any writable
-// CWebApplication properties can be configured here.
+/* Include debug functions */
+require_once(__DIR__.'/functions.php');
+
+$params = require __DIR__ . '/params.php';
+$db = require __DIR__ . '/db.php';
 
 define('TRUE', true);
 define('FALSE', false);
 
-include("loadStageConfig.php");
+$parameters = parse_ini_file(__DIR__ ."/../../.env.local");
+if (array_key_exists("showCarousel", $parameters)) {
+    $params['showCarousel'] = $parameters['showCarousel'];
+}
 
 function _joinpath($dir1, $dir2) {
     return realpath($dir1 . '/' . $dir2);
 }
 
-$homePath      = dirname(__FILE__) . '/../..';
-$protectedPath = _joinpath($homePath, 'application');
-$webrootPath   = _joinpath($homePath, 'public');
+$homePath      = dirname(__FILE__) . '/../../';
+$protectedPath = $homePath;
 $runtimePath   = _joinpath($homePath, 'runtime');
+$vendorPath = _joinpath($parameters['yiiPath'], 'vendor');
 
-return array(
-	'basePath'=>$protectedPath,
+$config = [
+    'id' => 'sunnah-front',
+	'name' => "Sunnah.com website",
+    'basePath' => dirname(__DIR__),
 	'runtimePath' => $runtimePath,
-	'name'=>'Sunnah.com',
-	'defaultController' => 'default/index',
+	'vendorPath' => $vendorPath,
+    'bootstrap' => ['log'],
+    'aliases' => [
+        '@bower' => '@vendor/bower-asset',
+        '@npm'   => '@vendor/npm-asset',
+    ],
 
-	// preloading 'log' component
-	'preload'=>array('log'),
+    'defaultRoute' => 'front/index',
 
-	// autoloading model and component classes
-	'import'=>array(
-		'application.models.*',
-		'application.components.*',
-		'application.modules.default.models.Util',
-	),
+    'modules' => [
+        'front' => [
+            'class' => 'app\modules\front\Front'
+        ],
+    ],
 
-	'modules'=>array(
-		'default',
-		'back',
-		'gii'=>array(
-			'class'=>'system.gii.GiiModule',
-			'password'=>'NotInRepo',
-		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1', '72.33.*', '24.183.96.*'),
-		),
-		
-	),
+    'components' => [
+        'request' => [
+            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+            'cookieValidationKey' => $parameters['cookieValidationKey'],
+			'csrfParam' => '_csrf_frontend',
+        ],
+        'reCaptcha3' => [
+            'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
+            'site_key'   => $parameters['recaptcha_v3_site_key'],
+            'secret_key' => $parameters['recaptcha_v3_secret_key'],
+        ],
+        'cache' => [
+            'class' => 'yii\caching\DummyCache',
+        ],
+        'user' => [
+            'identityClass' => 'app\models\User',
+            'enableAutoLogin' => true,
+        ],
+        'errorHandler' => [
+            'errorAction' => 'front/index/error',
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => $parameters['smtpServer'],  // e.g. smtp.mandrillapp.com or smtp.gmail.com
+                'username' => $parameters['smtpUser'],
+                'password' => $parameters['smtpPassword'],
+                'port' => $parameters['smtpPort'], // Port 25 is a very common port too
+                'encryption' => 'tls', // It is often used, check your provider or mail server specs
+         ],
+        ],
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning'],
+					'except' => ['yii\web\HttpException:404'],
+                ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning'],
+					'categories' => ['yii\web\HttpException:404'],
+					'logFile' => '@runtime/logs/404.log',
+                ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+					'categories' => ['hadithcount'],
+					'logFile' => '@runtime/logs/hadithcount.log',
+					'logVars' => [],
+                ],
+            ],
+        ],
+        'db' => $db,
+        // Write DB
+        'searchdb' => [
+          'class' => 'yii\db\Connection',
+          'dsn' => "mysql:host={$parameters['searchdb_host']};dbname={$parameters['searchdb_name']}",
+          'username' => $parameters['searchdb_username'],
+          'password' => $parameters['searchdb_password'],
+          'charset' => 'utf8',
+        ],
+        'solr' => [
+          'class' => 'app\components\search\engines\SolrConnection',
+          'host' => $parameters['solr_host'],
+          'port' => $parameters['solr_port'],
+          'username' => $parameters['solr_username'],
+          'password' => $parameters['solr_password'],
+        ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+			'normalizer' => [
+        		'class' => 'yii\web\UrlNormalizer',
+        		// use temporary redirection instead of permanent for debugging
+        		'action' => UrlNormalizer::ACTION_REDIRECT_TEMPORARY,
+    		],
+            'rules' => array(
+                // '(.*)' => 'front/index/maint',
+                '' => 'front/index',
+                'about' => 'front/index/about',
+                'news' => 'front/index/news',
+                'changelog' => 'front/index/change-log',
+                'support' => 'front/index/support',
+                'developers' => 'front/index/developers',
+                'contact' => 'front/index/contact',
+                'searchtips' => 'front/index/search-tips',
+                'tce' => 'front/collection/tce',
+                '<selection:ramadan>' => 'front/collection/selection',
+                '<selection:dhulhijjah>' => 'front/collection/selection',
+                '<selection:ashura>' => 'front/collection/selection',
+                'selectiondata/<selection:\w+>' => 'front/collection/selection-data', 
+                'socialmedia' => 'front/collection/socialmedia',
+                'captcha' => 'front/index/captcha',
+                'urn/<urn:\d+>' => 'front/collection/urn',
+                'narrator/<nid:\d+>' => 'front/narrator/index',
 
-	// application components
-	'components'=>array(
-		'widgetFactory' => array (
-			'widgets' => array (
-				'CLinkPager' => array (
-					'cssFile' => '/css/pager.css',
-				)
-			)
-		),
-		'user'=>array(
-			// enable cookie-based authentication
-			'allowAutoLogin'=>true,
-		),
-		'cache' => array(
-			'class' => 'CMemCache',
-			'useMemcached' => $parameters['useMemcached'],
-			'servers' => array(
-				array('host' => 'localhost', 'port' => 7630),
-			),
-		),
-		// uncomment the following to enable URLs in path-format
-		
-		'urlManager'=>array(
-			'urlFormat'=>'path',
-			'showScriptName'=>false,
-			'rules'=>array(
-				// '(.*)' => 'default/index/maint',
-				'' => 'default/index',
-				'about' => 'default/index/about',
-				'news' => 'default/index/news',
-				'changelog' => 'default/index/changelog',
-				'support' => 'default/index/support',
-				'searchtips' => 'default/index/searchtips',
-				'tce' => 'default/collection/tce',
-				'ramadan' => 'default/collection/ramadan',
-				'socialmedia' => 'default/collection/socialmedia',
-				'urn/<urn:\d+>' => 'default/collection/urn',
+                [ 'pattern' => 'nawawi40:<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'nawawi40/<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'nawawi40',
+                  'route' => 'front/collection/dispbook',
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'qudsi40:<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 2, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'qudsi40/<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 2, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'qudsi40',
+                  'route' => 'front/collection/dispbook',
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 2, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'shahwaliullah40:<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 3, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'shahwaliullah40/<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 3, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => 'shahwaliullah40',
+                  'route' => 'front/collection/dispbook',
+                  'defaults' => array('collectionName' => 'forty', 'ourBookID' => 3, '_escaped_fragment_' => 'default'),
+                ],
+                
+                '<collectionName:\w+>:<hadithNumber\w+>' => 'front/collection/hadith-by-number',
 
-				'ajax/<lang:\w+>/<collection>/<ourBookID>' => 'default/collection/ajaxHadith/collectionName/<collection>/ourBookID/<ourBookID>/lang/<lang>',
+				'ajax/log/hadithcount' => 'front/index/ajaxhadithcount',
 
-				// Gii
-                'gii'=>'gii',
-                'gii/<controller:\w+>'=>'gii/<controller>',
-                'gii/<controller:\w+>/<action:\w+>'=>'gii/<controller>/<action>',
+                [ 'pattern' => 'ajax/<lang:\w+>/<collectionName>/<ourBookID>',
+                  'route' => 'front/collection/ajax-hadith',
+                ],
 
-				'back'=>'back',
-				'back/<controller:\w+>'=>'back/<controller>',
-				'back/<controller:\w+>/<action:\w+>'=>'back/<controller>/<action>',
+                [ 'pattern' => '<collectionName:hisn>/<hadithNumbers:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:hisn>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => 1, '_escaped_fragment_' => 'default'),
+                ],
 
-				'nawawi40/<hadithNumbers:\d+>' => array('default/collection/dispbook/collectionName/nawawi40/ourBookID/1/hadithNumbers/<hadithNumbers>', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-				'nawawi40' => array('default/collection/dispbook/collectionName/nawawi40/ourBookID/1', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-				'qudsi40/<hadithNumbers:\d+>' => array('default/collection/dispbook/collectionName/qudsi40/ourBookID/1/hadithNumbers/<hadithNumbers>', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-				'qudsi40' => array('default/collection/dispbook/collectionName/qudsi40/ourBookID/1', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-		
-				'search/<query>/<page:\d+>' => 'default/search/oldsearch',
-				'search/<query>' => 'default/search/oldsearch',
-				'search/' => 'default/search/search',
-				'advanced' => 'default/search/advanced',
+                'search/<query>/<page:\d+>' => 'front/search/oldsearch',
+                'search/<query>' => 'front/search/oldsearch',
+                'search' => 'front/search/search',
+                'advanced' => 'front/search/advanced',
 
-				'yiiadmin/flushcache' => 'default/index/flushcache',
+                'yiiadmin/flushcache' => 'front/index/flush-cache',
 
-				'nasai/35b/<hadithNumbers>' => array('default/collection/dispbook/collectionName/nasai/ourBookID/-35', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-				'<collectionName:\w+>/introduction/<hadithNumbers>' => array('default/collection/dispbook/ourBookID/-1', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-				'<collectionName:\w+>/<ourBookID:\d+>/<hadithNumbers>' => array('default/collection/dispbook', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-				'<collectionName:\w+>/about' => 'default/collection/about',
-				'muslim/introduction' => array('default/collection/dispbook/collectionName/muslim/ourBookID/-1', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-				'ibnmajah/introduction' => array('default/collection/dispbook/collectionName/ibnmajah/ourBookID/-1', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-				'abudawud/letter' => array('default/collection/about/collectionName/abudawud/splpage/adletter', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-				'nasai/35b' => array('default/collection/dispbook/collectionName/nasai/ourBookID/-35', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-				'<collectionName:\w+>/index' => 'default/collection/colindex',
-				'<collectionName:\w+>/<ourBookID:\d+>' => array('default/collection/dispbook', 'defaultParams' => array('_escaped_fragment_' => 'default')),
-				'<collectionName:\w+>' => 'default/collection/index',
-		
-				//'<controller:\w+>/<id:\d+>'=>'<controller>/view',
-				//'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-				//'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+                [ 'pattern' => '<collectionName:nasai>/35b/<hadithNumbers>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => -35, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:shamail>/8b/<hadithNumbers>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => -8, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:\w+>/introduction/<hadithNumbers>',
+                  'route' => 'front/collection/dispbook',
+                  'defaults' => array('ourBookID' => -1, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:\w+>/<ourBookID:\d+>/<hadithNumbers>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('_escaped_fragment_' => 'default'),
+                ],
+                '<collectionName:\w+>/about' => 'front/collection/about',
+                [ 'pattern' => '<collectionName:\w+>/introduction',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => -1, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:abudawud>/letter',
+                  'route' => 'front/collection/about', 
+                  'defaults' => array('splpage' => 'adletter', '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:nasai>/35b',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => -35, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:shamail>/8b',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('ourBookID' => -8, '_escaped_fragment_' => 'default'),
+                ],
+                [ 'pattern' => '<collectionName:\w+>/<ourBookID:\d+>',
+                  'route' => 'front/collection/dispbook', 
+                  'defaults' => array('_escaped_fragment_' => 'default'),
+                ],
+                '<collectionName:\w+>' => 'front/collection/index',
+				'<collectionName:.*>' => 'front/collection/index',
+            ),
+        ],
+    ],
+    'params' => $params,
+];
 
-				//'<controller>/<action:\w+>'=>'default/<controller>/<action>',
-                //'<controller>'=>'default/<controller>',
-			),
-		),
-		
-		/*
-		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
-		*/
-		// uncomment the following to use a MySQL database
-		// TODO: Migrate credentials over to a secret handler/KMS
-		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=hadithdb',
-			'schemaCachingDuration' => 300,
-			'emulatePrepare' => true,
-			'username' => $credentials['db_username'],
-			'password' => $credentials['db_password'],
-			'charset' => 'utf8',
-		),
-		'db_internal'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=ilmfruit_testhadithdb',
-			'schemaCachingDuration' => 300,
-			'class' => 'CDbConnection',
-			'emulatePrepare' => true,
-			'username' => 'ilmfruit_ansari',
-			'password' => 'NotInRepo',
-			'charset' => 'utf8',
-		),
-		'errorHandler'=>array(
-			// use 'site/error' action to display errors
-            'errorAction'=>'site/error',
-        ),
-		'log'=>array(
-			'class'=>'CLogRouter',
-			'routes'=>array(
-				array(
-					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
-				),
-				// uncomment the following to show log messages on web pages
-				
-				array(
-					'class'=>'CWebLogRoute',
-					'enabled' => YII_DEBUG,
-				),
-				
-			),
-		),
-	),
+if (YII_ENV_DEV) {
+    // configuration adjustments for 'dev' environment
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = [
+        'class' => 'yii\debug\Module',
+        // uncomment the following to add your IP if you are not connecting from localhost.
+        //'allowedIPs' => ['*'],
+    ];
 
-	// application-level parameters that can be accessed
-	// using Yii::app()->params['paramName']
-	'params'=>array(
-		// this is used in contact page
-		'adminEmail'=>'sunnah@iman.net',
-		'cacheTTL' => $parameters['cacheTTL'], // time to leave objects in cache
-		'pageSize' => 100,
-	),
-);
+    $config['bootstrap'][] = 'gii';
+    $config['modules']['gii'] = [
+        'class' => 'yii\gii\Module',
+        // uncomment the following to add your IP if you are not connecting from localhost.
+        //'allowedIPs' => ['127.0.0.1', '::1'],
+    ];
+}
+else {
+    $config['components']['cache'] = array(
+            'class' => 'yii\caching\MemCache',
+            'useMemcached' => TRUE,
+            'servers' => array(
+                array('host' => $parameters['cacheHost'],
+                      'port' => (int) ($parameters['cachePort']),
+                     ),
+            ),
+        );
+}
+
+return $config;

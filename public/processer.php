@@ -1,8 +1,8 @@
 <?php
 require_once 'Mail.php';
 require_once('recaptchalib.php');
-include("../application/config/loadStageConfig.php");
-$privatekey = $credentials['recaptcha_private_key'];
+$parameters = parse_ini_file(__DIR__ ."/../.env.local");
+$privatekey = $parameters['recaptcha_private_key'];
 
 function getIP() {
 	if (!empty($_SERVER['HTTP_CLIENT_IP']))  //check ip from share internet
@@ -22,19 +22,19 @@ if (isset($_POST['ftype'])) {
 			return;
 		}
 
-		$errortype = $_POST['type'].$_POST['otherrror'];
+		$errortype = $_POST['type']." ".$_POST['othererror'];
 		$errortext = $_POST['re_additional'];
 		$email = $_POST['email'];
 		if (strlen($email) <= 3) $email = "sunnah@iman.net";
 		
-		$resp = recaptcha_check_answer ($privatekey,
-			$_SERVER["REMOTE_ADDR"],
-		    $_POST["recaptcha_challenge_field"],
-			$_POST["recaptcha_response_field"]);
-		
-		if (!$resp->is_valid) {
-			echo json_encode(array('status' => 2, 'message' => "The captcha was entered	"
-				. "incorrectly. Please try again. $resp->error"));
+		$resp = recaptcha_check_answer(
+				$privatekey,
+				$_POST["g-recaptcha-response"]
+		);
+	
+		if (!$resp) {
+				echo json_encode(array('status' => 2, 'message' => "The captcha was entered	"
+					. "incorrectly. Please try again. $resp->error"));
 		}
 		else {
 			$fullString = "Error type: ".$errortype."\n";
@@ -55,8 +55,8 @@ if (isset($_POST['ftype'])) {
               'host' => 'email-smtp.us-west-2.amazonaws.com',
               'port' => 587,
               'auth' => true,
-              'username' => $credentials['smtpUser'],
-              'password' => $credentials['smtpPassword']
+              'username' => $parameters['smtpUser'],
+              'password' => $parameters['smtpPassword']
             );
 
             $mail = Mail::factory('smtp', $smtpParams);
