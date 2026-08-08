@@ -1,0 +1,1015 @@
+/* narrator.css — all rules scoped under .narrator-page to avoid leaking into
+   the rest of the site via all.css. CSS custom properties live in :root since
+   they are inherited and harmless when unused on other pages. */
+
+:root {
+  --surface: #faf9f7;
+  --surface-low: #f4f3f1;
+  --surface-lowest: #fff;
+  --surface-container: #efeeec;
+  --on-surface: #1a1c1b;
+  --primary: #00685b;
+  --primary-container: #0d8373;
+  --primary-fixed: #93f4e0;
+  --on-primary-fixed: #00201b;
+  --secondary: #5b5f63;
+  --secondary-container: #e0e2e8;
+  --on-secondary-container: #616569;
+  --outline-variant: #bdc9c5;
+  --outline-faint: rgba(189, 201, 197, 0.3);
+  --outline-fainter: rgba(189, 201, 197, 0.2);
+  --primary-10: rgba(0, 104, 91, 0.1);
+  --primary-20: rgba(0, 104, 91, 0.2);
+  --teachers-bg: #c4d8de;
+  --students-bg: #d9e8ed;
+  --f-head: "Newsreader", serif;
+  --f-body: "Akzidenz Roman", Helvetica, Arial, sans-serif;
+  --f-arabic: "KFGQPC Uthman Taha Naskh", "KFGQPC Uthmanic Script HAFS", Scheherazade, "Trebuchet MS", Arial, Helvetica;
+}
+
+/* ---------- Box-sizing reset (scoped) ---------- */
+.narrator-page *,
+.narrator-page *::before,
+.narrator-page *::after { box-sizing: border-box; }
+
+/* ---------- Element resets (scoped) ---------- */
+.narrator-page h1,
+.narrator-page h2,
+.narrator-page h3,
+.narrator-page h4,
+.narrator-page p { margin: 0; }
+
+.narrator-page ul { margin: 0; padding: 0; list-style: none; }
+
+.narrator-page a {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+.narrator-page a:hover { text-decoration: underline; }
+
+.narrator-page button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+}
+
+/* ---------- Icons ---------- */
+.narrator-page .mso {
+  font-family: "Material Symbols Outlined";
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+.narrator-page .mso-sm { font-size: 14px; margin-right: 0.5rem; }
+.narrator-page .mso-base { font-size: 1rem; }
+.narrator-page .mso-md { font-size: 1.5rem; }
+.narrator-page .mso-filled { font-variation-settings: "FILL" 1; }
+
+/* ---------- Layout ---------- */
+.narrator-page .container {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2rem 2rem 5rem;
+}
+.narrator-page .stack-4 > * + * { margin-top: 1rem; }
+.narrator-page .stack-8 > * + * { margin-top: 2rem; }
+.narrator-page .mb-section { margin-bottom: 4rem; }
+.narrator-page .mt-big { margin-top: 2.5rem; }
+.narrator-page .hidden { display: none; }
+.narrator-page .dim { color: var(--secondary); }
+.narrator-page .em { font-weight: 700; color: var(--on-surface); }
+
+/* ---------- Hero ---------- */
+.narrator-page .hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+.narrator-page .hero-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+@media (min-width: 768px) {
+  .narrator-page .hero-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.narrator-page .hero-title {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 2.5rem;
+  letter-spacing: -0.025em;
+}
+
+.narrator-page .badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.narrator-page .pill-primary {
+  display: inline-flex;
+  align-items: center;
+  background: var(--primary-container);
+  color: #fff;
+  padding: 0.375rem 1rem;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.narrator-page .pill-grade {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 1rem;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.narrator-page .pill-grade--green   { background: var(--primary-container); color: #fff; }
+.narrator-page .pill-grade--yellow  { background: #92400e; color: #fff; }
+.narrator-page .pill-grade--red     { background: #b91c1c; color: #fff; }
+.narrator-page .pill-grade--neutral { background: #fef9c3; color: #713f12; }
+/* Grade-based tiers (reliability_grade 1–12) */
+.narrator-page .pill-grade--grade-1 { background: #065f46; color: #fff; } /* 1–3:  deep emerald   */
+.narrator-page .pill-grade--grade-2 { background: #059669; color: #fff; } /* 4–6:  medium emerald */
+.narrator-page .pill-grade--grade-3 { background: #a16207; color: #fff; } /* 7:    yellow      */
+.narrator-page .pill-grade--grade-4 { background: #c2410c; color: #fff; } /* 8–10: amber-red   */
+.narrator-page .pill-grade--grade-5 { background: #991b1b; color: #fff; } /* 11–12: dark red   */
+.narrator-page .pill-grade .arabic  { font-size: 1.25rem; font-weight: 700; line-height: 1; color: inherit; }
+.narrator-page .pill-secondary {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  padding: 0.375rem 0.75rem 0.25rem;
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.narrator-page .pill-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+.narrator-page .pill-outline {
+  background: var(--primary-10);
+  color: var(--primary);
+  border: 1px solid var(--primary-20);
+  padding: 0.5rem 1rem;
+  border-radius: 2px;
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+.narrator-page .pill-outline.arabic { font-size: 1.25rem; }
+
+/* ---------- Hero alt-name subtitle ---------- */
+.narrator-page .hero-alt-name {
+  color: var(--secondary);
+  font-style: italic;
+  font-size: 1.2rem;
+  margin-top: 0.3rem;
+}
+.narrator-page .hero-alt-name.arabic { font-size: 1.4rem; font-style: normal; }
+
+/* ---------- Flag pills (ikhtilat / tadlis) ---------- */
+.narrator-page .pill-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+.narrator-page .pill-flag--warning {
+  background: #e8f0c0;
+  color: #2e3d00;
+  border-color: #8a9a00;
+}
+
+.narrator-page .fields { display: flex; gap: 1.5rem; }
+.narrator-page [dir="rtl"] .fields { gap: 2rem; }
+.narrator-page .field-line { display: flex; align-items: center; gap: 1rem; }
+
+.narrator-page .label {
+  display: block;
+  color: var(--secondary);
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.125rem;
+}
+.narrator-page .label--m1 { margin-bottom: 0.25rem; }
+.narrator-page .label--m3 { margin-bottom: 0.75rem; }
+.narrator-page .field { display: block; font-family: var(--f-head); font-size: 1.25rem; }
+
+/* ---------- Bio block ---------- */
+.narrator-page .bio-block {
+  background: var(--surface-low);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 4rem;
+}
+.narrator-page .bio-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.narrator-page .bio-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+@media (min-width: 768px) {
+  .narrator-page .bio-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+.narrator-page .meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.narrator-page .lineage {
+  color: var(--on-surface);
+  line-height: 1.6;
+  font-style: italic;
+  font-size: 1.125rem;
+}
+.narrator-page .pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ---------- Section headers ---------- */
+.narrator-page .section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.narrator-page .section-head--ar { justify-content: flex-end; margin-bottom: 1rem; }
+.narrator-page .section-title {
+  font-family: var(--f-head);
+  font-size: 2rem;
+  padding-left: 1rem;
+  border-left: 4px solid var(--primary);
+}
+.narrator-page .section-title.arabic { font-family: var(--f-arabic); font-size: 2.25rem; }
+.narrator-page .section-title--ar {
+  padding-left: 0;
+  border-left: 0;
+  padding-right: 1rem;
+  border-right: 4px solid var(--primary);
+}
+.narrator-page .section-title-sm {
+  font-family: var(--f-head);
+  font-size: 1.25rem;
+  padding-right: 1rem;
+  border-right: 4px solid var(--primary);
+}
+
+/* ---------- Coming soon ---------- */
+.narrator-page .coming-soon-pair {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.narrator-page .coming-soon {
+  color: var(--secondary);
+  font-style: italic;
+}
+
+/* ---------- Verdict cards ---------- */
+.narrator-page .verdict {
+  background: var(--surface-lowest);
+  border-left: 4px solid var(--primary);
+  transition: box-shadow 0.15s;
+}
+.narrator-page .verdict:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+.narrator-page .verdict--muted { border-left-color: var(--outline-variant); }
+.narrator-page .verdict--ar {
+  border-left: 0;
+  border-right: 4px solid var(--primary);
+  padding: 1.5rem;
+}
+.narrator-page .verdict-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.narrator-page .verdict-col { padding: 1.5rem; }
+.narrator-page .verdict-col--ar {
+  border-left: 1px solid var(--outline-faint);
+  text-align: right;
+}
+.narrator-page .verdict-scholar {
+  color: var(--primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.narrator-page .critic-quote {
+  color: var(--secondary);
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+/* ---------- Narrated hadith compact list ---------- */
+.narrator-page .narrated-hadith-list {
+  margin-top: 1rem;
+  border-top: 1px solid var(--outline-faint);
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: end;
+  column-gap: 2.7rem;
+  text-align: right;
+}
+.narrator-page .narrated-hadith-row {
+  display: contents;
+}
+.narrator-page .narrated-hadith-link {
+  display: contents;
+  color: var(--primary);
+}
+.narrator-page .narrated-hadith-ref {
+  grid-column: 1;
+  justify-self: stretch;
+  padding: 0.375rem 0;
+  border-bottom: 1px solid var(--outline-fainter);
+  white-space: nowrap;
+  text-align: right;
+  color: inherit;
+  cursor: pointer;
+}
+.narrator-page .narrated-hadith-snippet {
+  grid-column: 2;
+  justify-self: stretch;
+  min-width: 0;
+  max-width: min(48rem, 72vw);
+  padding: 0.375rem 0;
+  border-bottom: 1px solid var(--outline-fainter);
+  color: inherit;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+  cursor: pointer;
+}
+.narrator-page .narrated-hadith-snippet.arabic {
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+.narrator-page .narrated-hadith-link:hover .narrated-hadith-ref,
+.narrator-page .narrated-hadith-link:hover .narrated-hadith-snippet {
+  text-decoration: underline;
+}
+.narrator-page .narrated-hadith-more {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 0.85rem;
+}
+.narrator-page .narrated-hadith-more-link {
+  color: var(--primary);
+  font-weight: 700;
+}
+.narrator-page .narrated-hadith-more-link.arabic {
+  color: var(--primary);
+  font-size: 1.35rem;
+  line-height: 1.4;
+}
+
+/* ---------- Narrated hadith full page ---------- */
+.narrator-page .narrator-hadith-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.narrator-page .narrator-count-pill {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 11rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--primary-20);
+  border-radius: 8px;
+  background: var(--primary-10);
+}
+.narrator-page .narrator-count-pill--matched {
+  background: var(--surface-low);
+  border-color: var(--outline-faint);
+}
+.narrator-page .narrator-count-value {
+  font-family: var(--f-head);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--on-surface);
+  line-height: 1;
+}
+.narrator-page .narrator-count-label,
+.narrator-page .narrator-count-note {
+  color: var(--secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.35rem;
+}
+.narrator-page .narrator-count-note {
+  font-size: 0.95rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.narrator-page .narrator-filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+.narrator-page .narrator-filter-pill {
+  display: inline-grid;
+  gap: 0.15rem;
+  align-items: center;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--outline-faint);
+  border-radius: 999px;
+  background: var(--surface-lowest);
+  color: var(--secondary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+}
+.narrator-page .narrator-filter-pill .arabic {
+  font-size: 1.35rem;
+  font-weight: 400;
+}
+.narrator-page .narrator-filter-pill[aria-pressed="true"] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.narrator-page .narrator-hadith-clusters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.8rem 2rem;
+}
+.narrator-page .narrator-hadith-cluster {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--outline-faint);
+}
+.narrator-page .narrator-cluster-title {
+  color: var(--on-surface);
+  font-size: 2rem;
+  line-height: 1.65;
+  text-align: right;
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.6rem;
+  border-bottom: 2px solid var(--primary-20);
+}
+.narrator-page .narrator-cluster-link-list {
+  display: grid;
+  gap: 0;
+  justify-content: start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+.narrator-page .narrator-cluster-link-list li {
+  border-bottom: 1px solid var(--outline-fainter);
+}
+.narrator-page .narrator-cluster-link {
+  display: inline-block;
+  padding: 0.35rem 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+.narrator-page .narrator-cluster-link:hover {
+  text-decoration: underline;
+}
+.narrator-page .narrator-cluster-expand,
+.narrator-page .narrator-clusters-load-more,
+.narrator-page .narrator-hadith-error,
+.narrator-page .narrator-hadith-empty {
+  margin-top: 1rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+.narrator-page .narrator-clusters-load-more {
+  display: grid;
+  gap: 0.15rem;
+  justify-items: center;
+  margin: 2rem auto 0;
+}
+.narrator-page .narrator-clusters-load-more .arabic { font-size: 1.25rem; font-weight: 400; }
+.narrator-page .narrator-hadith-error,
+.narrator-page .narrator-hadith-empty {
+  color: var(--secondary);
+}
+.narrator-page .narrator-cluster-expand {
+  border: 0;
+  background: transparent;
+  padding: 0.35rem 0;
+}
+.narrator-page .narrator-clusters-load-more {
+  border: 1px solid var(--outline-faint);
+  border-radius: 999px;
+  background: var(--surface-lowest);
+  padding: 0.55rem 1.1rem;
+}
+.narrator-page .narrator-clusters-load-more * {
+  color: inherit;
+  -webkit-text-fill-color: inherit;
+}
+.narrator-page .narrator-clusters-load-more:disabled {
+  color: var(--primary);
+  -webkit-text-fill-color: var(--primary);
+  cursor: wait;
+  opacity: 0.75;
+}
+.narrator-page.narrator-hadith-loading #narrator-hadith-results {
+  opacity: 0.55;
+}
+
+/* ---------- Teacher / Student panels ---------- */
+.narrator-page .panel {
+  padding: 2rem;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.narrator-page .panel--teachers { background: var(--teachers-bg); }
+.narrator-page .panel--students { background: var(--students-bg); }
+.narrator-page .panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.narrator-page .panel-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--f-head);
+  font-size: 1.75rem;
+  color: var(--on-surface);
+  font-weight: 700;
+}
+.narrator-page .panel-label .mso { font-size: 1.25rem; }
+
+.narrator-page .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.125rem 0;
+  gap: 1rem;
+}
+.narrator-page .name-en { font-size: 1.125rem; color: var(--primary); }
+.narrator-page .name-ar { text-align: right; }
+.narrator-page .grade { color: var(--secondary); font-size: 0.75rem; }
+
+.narrator-page .show-all-btn,
+.narrator-page .read-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 1rem;
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.narrator-page .show-all-btn:hover,
+.narrator-page .read-more-btn:hover { text-decoration: underline; }
+.narrator-page .read-more-btn { display: flex; margin-left: auto; }
+.narrator-page .show-all-body {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--outline-fainter);
+}
+
+/* ---------- Accordion ---------- */
+.narrator-page .accordion {
+  background: var(--surface-lowest);
+  overflow: hidden;
+  border-bottom: 1px solid var(--outline-faint);
+}
+.narrator-page .accordion-btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 1rem;
+  transition: background 0.15s;
+}
+.narrator-page .accordion-btn:hover { background: var(--surface-low); }
+.narrator-page .accordion-title {
+  font-size: 2rem;
+  color: var(--primary);
+  font-style: italic;
+}
+.narrator-page .accordion-body {
+  padding: 0 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.narrator-page .tarjama-expander {
+  position: relative;
+  overflow: hidden;
+  max-height: 32rem;
+}
+.narrator-page .tarjama-fade {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6rem;
+  background: linear-gradient(to bottom, transparent, var(--surface-lowest));
+}
+.narrator-page .ar-para { margin-bottom: 0.5rem; }
+.narrator-page .ar-para.arabic { font-size: 1.5rem; }
+.narrator-page .sublabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--secondary);
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+.narrator-page .sublabel.arabic {
+  font-size: 1.625rem;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--on-surface);
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+.narrator-page .two-col {
+  columns: 2;
+  column-gap: 2rem;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  margin: 0.25rem 0;
+}
+
+/* ---------- Tarjama inline markup ---------- */
+.narrator-page .tarjama-narrator-link {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+}
+.narrator-page .tarjama-scholar {
+  color: #92400e;
+  font-weight: 700;
+}
+.narrator-page .tarjama-verdict {
+  color: var(--on-surface);
+  font-weight: 700;
+}
+.narrator-page .tarjama-poem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.45rem 0.75rem;
+  margin: 0.7rem 0;
+  padding: 0.45rem 0.8rem;
+  max-width: 42rem;
+  background: var(--surface-low);
+  border-inline-start: 3px solid var(--primary-20);
+  border-radius: 6px;
+  color: var(--on-surface);
+  line-height: 1.9;
+}
+.narrator-page .tarjama-hemistich {
+  min-width: 0;
+}
+.narrator-page .tarjama-hemistich:first-child { text-align: start; }
+.narrator-page .tarjama-hemistich:last-child { text-align: end; }
+.narrator-page .tarjama-verse-sep {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--outline-variant);
+  opacity: 0.85;
+}
+.narrator-page .sigla-link,
+.narrator-page .sigla {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9em;
+  font-family: var(--f-arabic);
+  font-weight: 700;
+  vertical-align: baseline;
+  line-height: 1;
+  min-width: 1.2em;
+  margin-inline: 0.12em;
+  padding: 0.08em 0.28em 0.14em;
+  border: 1px solid var(--primary-20);
+  border-radius: 999px;
+  background: var(--primary-10);
+}
+.narrator-page .sigla-link {
+  color: var(--primary);
+  text-decoration: none;
+}
+.narrator-page .sigla-link:hover { opacity: 1; text-decoration: underline; }
+.narrator-page .sigla {
+  color: var(--secondary);
+  background: var(--surface-low);
+  border-color: var(--outline-faint);
+}
+
+/* ---------- Scrollbar ---------- */
+.narrator-page .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.narrator-page .custom-scrollbar::-webkit-scrollbar-track { background: var(--surface-container); }
+.narrator-page .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+/* ---------- Arabic typography ---------- */
+/* font-family comes from the global .arabic rule in all.css */
+.narrator-page .arabic {
+  font-size: 1.25em;
+  line-height: 1.6;
+}
+.narrator-page .arabic-label { font-size: 16px; }
+/* Placed after .arabic so its font-size wins at equal specificity */
+.narrator-page .panel-label-ar {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--on-surface);
+}
+
+/* Compound overrides where Arabic needs a specific size */
+.narrator-page .hero-title.arabic { font-family: var(--f-arabic); font-size: 3.125rem; line-height: 1.15; }
+.narrator-page .pill-secondary.arabic {
+  font-size: 21px;
+  padding: 0 0.75rem;
+  text-transform: none;
+  letter-spacing: normal;
+}
+.narrator-page .pill-primary .arabic { font-size: 0.875rem; font-weight: 700; }
+.narrator-page .field.arabic { font-family: var(--f-arabic); font-size: 1.625rem; line-height: 1.6; }
+.narrator-page .lineage.arabic { font-family: var(--f-arabic); font-size: 1.5rem; font-style: normal; }
+.narrator-page .verdict-scholar.arabic { font-size: 1.75rem; }
+.narrator-page .critic-quote.arabic { font-size: 1.5rem; line-height: 1.8; }
+.narrator-page .name-ar.arabic { font-size: 1.625rem; }
+.narrator-page .accordion-title.arabic { font-size: 2rem; }
+.narrator-page .label.arabic-label {
+  font-size: 16px;
+  text-transform: none;
+  letter-spacing: normal;
+  margin-bottom: 0;
+  line-height: 1;
+}
+
+/* =====================================================
+   Mobile responsive overrides (< 768px)
+   ===================================================== */
+@media (max-width: 767px) {
+  /* Container */
+  .narrator-page .container {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  /* Hero titles */
+  .narrator-page .hero-title            { font-size: 1.75rem; text-align: center; }
+  .narrator-page .hero-title.arabic     { font-size: 2.25rem; text-align: center; }
+  .narrator-page .hero-alt-name         { text-align: center; }
+
+  /* Section heads: tighten spacing, keep EN + AR on one line */
+  .narrator-page .section-head          { margin-bottom: 1.25rem; gap: 0.5rem; }
+  .narrator-page .section-title         { font-size: 1.5rem; }
+  .narrator-page .section-title.arabic  { font-size: 1.75rem; }
+
+  /* Bio block */
+  .narrator-page .bio-block { padding: 1.25rem; }
+
+  /* Panel heads: keep EN + AR on one line, tighten margin */
+  .narrator-page .panel-head { margin-bottom: 1rem; }
+  .narrator-page .panel        { padding: 1.25rem; }
+  .narrator-page .panel-label  { font-size: 1.25rem; }
+  .narrator-page .panel-label-ar { font-size: 1.5rem; }
+
+  /* Teacher/student name rows: keep EN + AR paired while allowing either side to wrap */
+  .narrator-page .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 0.75rem;
+    align-items: baseline;
+    padding: 0.5rem 0;
+  }
+  .narrator-page .name-en,
+  .narrator-page .name-ar {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+  .narrator-page .name-en { justify-self: start; }
+  .narrator-page .name-ar {
+    justify-self: end;
+    text-align: right;
+    width: auto;
+  }
+
+  /* Coming-soon pair: stack EN above AR */
+  .narrator-page .coming-soon-pair {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* Verdict card padding */
+  .narrator-page .verdict--ar { padding: 1rem; }
+
+  /* Accordion body: reduce horizontal padding */
+  .narrator-page .accordion-body { padding: 0 0.75rem 1.5rem; }
+
+  /* Tarjama two-col list: single column on narrow screens */
+  .narrator-page .two-col { columns: 1; }
+  .narrator-page .tarjama-poem {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    max-width: none;
+    text-align: center;
+  }
+  .narrator-page .tarjama-hemistich:first-child,
+  .narrator-page .tarjama-hemistich:last-child {
+    text-align: center;
+  }
+  .narrator-page .tarjama-verse-sep {
+    width: 2rem;
+    height: 1px;
+  }
+
+  /* Center bilingual content within hero and bio rows so stacked EN/AR align consistently */
+  .narrator-page .hero-row > div,
+  .narrator-page .bio-row > div        { text-align: center; }
+  /* Explicit centering for elements that resist inheritance due to direction: rtl */
+  .narrator-page .lineage              { text-align: center; }
+  .narrator-page .hero-row .badges,
+  .narrator-page .hero-row .fields,
+  .narrator-page .bio-row .pills       { justify-content: center; }
+  /* Meta-grid: single column so a lone item (e.g. Cities) isn't stranded in the left track */
+  .narrator-page .meta-grid            { grid-template-columns: 1fr; }
+  /* Explicit centering on the actual text nodes — inheritance through direction:rtl containers is unreliable */
+  .narrator-page .meta-grid .label,
+  .narrator-page .meta-grid .field     { text-align: center; }
+
+  /* Bukhari/Muslim pills: compact so both fit on one line */
+  .narrator-page .pill-outline {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.875rem;
+  }
+  .narrator-page .pill-outline.arabic { font-size: 1rem; }
+
+  .narrator-page .narrator-count-pill { min-width: 9rem; flex: 1 1 9rem; }
+  .narrator-page .narrator-count-value { font-size: 1.6rem; }
+  .narrator-page .narrated-hadith-list {
+    display: block;
+    text-align: initial;
+  }
+  .narrator-page .narrated-hadith-row { display: block; }
+  .narrator-page .narrated-hadith-link {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: 0.75rem;
+    align-items: baseline;
+  }
+  .narrator-page .narrated-hadith-ref {
+    grid-column: 1;
+    justify-self: start;
+    text-align: left;
+  }
+  .narrator-page .narrated-hadith-snippet {
+    grid-column: 2;
+    justify-self: stretch;
+    max-width: none;
+  }
+  .narrator-page .narrated-hadith-more {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 0.75rem;
+    align-items: baseline;
+  }
+  .narrator-page .narrated-hadith-more-link {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+  .narrator-page .narrated-hadith-more-link.arabic {
+    justify-self: end;
+    text-align: right;
+  }
+  .narrator-page .narrator-hadith-clusters { grid-template-columns: 1fr; }
+  .narrator-page .narrator-cluster-title { font-size: 1.6rem; }
+  .narrator-page .narrator-cluster-link-list { justify-content: start; }
+
+  /* Arabic field size scale-down */
+  .narrator-page .field.arabic          { font-size: 1.25rem; }
+  .narrator-page .lineage.arabic        { font-size: 1.25rem; }
+  .narrator-page .verdict-scholar.arabic { font-size: 1.375rem; }
+  .narrator-page .critic-quote.arabic   { font-size: 1.2rem; }
+  .narrator-page .name-ar.arabic        { font-size: 1.25rem; }
+  .narrator-page .ar-para.arabic        { font-size: 1.25rem; }
+  .narrator-page .sublabel.arabic       { font-size: 1.375rem; }
+
+  /* Side-by-side bio rows: Cities/Regions, Affiliations, Bukhari/Muslim pills */
+  .narrator-page .bio-row--sb {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  /* Use direction-relative alignment so EN left-aligns and AR right-aligns naturally */
+  .narrator-page .bio-row--sb > div,
+  .narrator-page .bio-row--sb .meta-grid .label,
+  .narrator-page .bio-row--sb .meta-grid .field { text-align: start; }
+  /* Pills: align to column start (left for EN, right for AR in RTL flex context) */
+  .narrator-page .bio-row--sb .pills { justify-content: flex-start; }
+
+  /* Meta-grid side-by-side: slightly smaller Arabic labels than the 16px default so rows
+     roughly track their EN counterparts; field values larger than the general mobile scale-down */
+  .narrator-page .bio-row--sb .meta-grid .label.arabic-label {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 0.25rem;
+  }
+  .narrator-page .bio-row--sb .meta-grid .field.arabic { font-size: 1.375rem; }
+}
+
+/* =====================================================
+   Dark-mode overrides
+   Redefine every narrator custom property here; all
+   existing rules pick up the new values automatically.
+   ===================================================== */
+[data-theme="dark"] .narrator-page {
+  /* Surfaces */
+  --surface:           #1f2125;
+  --surface-low:       #272f33;   /* bio-block background */
+  --surface-lowest:    #22272b;   /* verdict cards, accordion */
+  --surface-container: #343a40;
+
+  /* Text colours */
+  --on-surface:        #dde3e0;   /* lineage, panel labels */
+  --secondary:         #9caba6;   /* labels (kunya/generation/Cities), critic quotes, dim text */
+
+  /* Primary — lighter teal so it reads on dark backgrounds */
+  --primary:           #4db6a8;
+  --primary-container: #2a8a7c;
+  --primary-fixed:     #4db6a8;
+  --on-primary-fixed:  #001a16;
+  --primary-10:        rgba(77, 182, 168, 0.12);
+  --primary-20:        rgba(77, 182, 168, 0.28);
+
+  /* Secondary container (pill-secondary) */
+  --secondary-container:    #343a40;
+  --on-secondary-container: #b0bbb6;
+
+  /* Borders */
+  --outline-variant:  #3d4a47;
+  --outline-faint:    rgba(61, 74, 71, 0.55);
+  --outline-fainter:  rgba(61, 74, 71, 0.30);
+
+  /* Teacher / Student panels — cool-hued darks, visually distinct
+     from each other and from the general surface colours */
+  --teachers-bg: #1a3040;   /* dark slate-blue */
+  --students-bg: #1b3830;   /* dark teal-green */
+}
+
+[data-theme="dark"] .narrator-page .tarjama-scholar {
+  color: #fdba74;  /* orange-300 — amber-rust lightened for dark backgrounds */
+}
+
+[data-theme="dark"] .narrator-page a {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .narrator-page .narrated-hadith-link,
+[data-theme="dark"] .narrator-page .narrated-hadith-link .narrated-hadith-ref,
+[data-theme="dark"] .narrator-page .narrated-hadith-link .narrated-hadith-snippet {
+  color: var(--primary) !important;
+}
+
+[data-theme="dark"] .narrator-page .pill-flag--warning {
+  background: #3a4a00;
+  color: #d4e87a;
+  border-color: #6b7a00;
+}

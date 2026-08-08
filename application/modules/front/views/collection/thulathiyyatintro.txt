@@ -1,0 +1,97 @@
+<?php $thulathiyyatIntroCollapsible = !empty($thulathiyyatIntroCollapsible); ?>
+<style>
+.thulathiyyatintro {
+    width: 72%;
+    max-width: 980px;
+    margin: 15px auto 2em;
+}
+.thulathiyyatintro.collapsed {
+    height: 65vh;
+}
+.thulathiyyatintro:not(.collapsed) {
+    height: auto;
+}
+.thulathiyyatintro table {
+    width: 64%;
+    margin: 1em auto;
+}
+@media (max-width: 767px) {
+    .thulathiyyatintro {
+        width: auto;
+        margin: 15px 1em 2em;
+        box-sizing: border-box;
+    }
+    .thulathiyyatintro table {
+        width: 100%;
+    }
+}
+</style>
+
+<div class="virtuesintro thulathiyyatintro<?php echo $thulathiyyatIntroCollapsible ? ' collapsible collapsed' : ''; ?>">
+<!-- <h3>Introduction</h3> -->
+
+<p class="arabic" dir="rtl" style="text-align: right;">
+بِسْمِ اللهِ الرَّحْمنِ الرَّحِيمِ. الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالْعَاقِبَةُ لِلْمُتَّقِينَ وَصَلَّى اللَّهُ عَلَى مُحَمَّدٍ خَاتَم النَّبِيِّينَ وَعَلَى جَمِيعِ الأَنْبِيَاءِ وَالْمُرْسَلِين
+</p>
+
+<p><i>In the Name of Allah, the Merciful, the Beneficent. All praise is due to Allah, Lord of the worlds, and the praiseworthy end is for those who are mindful of and obedient to Him. May Allah send blessings upon Muhammad, the final Prophet, and upon all the Prophets and Messengers.</i></p>
+
+<p>Imagine meeting the son or daughter of a companion of the Prophet ﷺ and asking him or her to convey something their parents heard directly from the Messenger ﷺ. Compare that to meeting someone who came seven generations later reporting to you something about the Prophet ﷺ through a chain of narrators. If given an option between the two meetings, you'll most likely opt for the first, as the chain of people between you and the Prophet ﷺ is shorter — in this case, just two.</p>
+
+<p>What follows is a compilation of ḥadīth known as <i>thulāthiyyāt</i>. Thulāthiyyāt (singular <i>thulāthī</i>) refers to a ḥadīth (prophetic narration) where there are only three narrators in the chain of narration (sanad/isnād) between the compiler or narrator of the ḥadīth (e.g., Imam al-Bukhārī) and the Prophet Muhammad ﷺ. The narrators in the chain are usually a <i>ṣaḥābī</i> (companion), a <i>tābiʿī</i> (first generation after the companions), and the second generation after the companions. The one compiling the ḥadīth is usually a scholar with a well-known ḥadīth collection, such as Ṣaḥīḥ al-Bukhārī, Sunan al-Dārimī, and Jāmiʿ al-Tirmidhī, among others.</p>
+
+<p>The infrequency of the thulāthiyyāt traditions, compared to other narrations, amplifies their importance, as many other narrations contain anywhere from four to seven narrators, or more, in their chains of narration. In ḥadīth studies, an isnād (chain) that is shorter — i.e., with fewer narrators to the Prophet ﷺ — is considered stronger and more reliable, since a shorter chain is easier to analyze and has a lower margin of error than an isnād with more people in it.</p>
+
+<p>Nevertheless, it should be noted that a short chain does not guarantee that a ḥadīth is reliable, and a longer chain does not imply that the ḥadīth loses anything of its veracity or reliability. Furthermore, there is no special virtue or merit in the number of narrators in a chain, including the <i>thunāʾiyyāt</i> (two narrators), <i>thulāthiyyāt</i>, etc. The thulāthiyyāt of earlier scholars are not especially notable and may in fact be weaker, since those scholars had access to naturally shorter chains in their own time; the thulāthiyyāt of later ḥadīth compilers carry greater significance precisely because of how rare they were by that period — as in the Musnad of Imam Aḥmad ibn Ḥanbal (d. 241) or Imam al-Bukhārī (d. 256), or even as late as Imam al-Tirmidhī (d. 279).</p>
+
+<p>Generally, searching for a shorter chain of narration is better and highly recommended for various disciplines, and it has implications in ḥadīth, fiqh, ʿulūm al-Qurʾān, and other disciplines, so long as the chain of narration has no weaknesses.</p>
+
+<p><b>Some benefits of studying the thulāthiyyāt collections in our times:</b></p>
+<ul>
+<li>These short collections make it easy and possible for a student to study ḥadīth.</li>
+<li>A connection with the great scholars of ḥadīth and their works, and familiarity with the lesser-known texts of the ḥadīth scholars.</li>
+<li>Generally, a student starts with the shorter collections before reaching the large collections. This is the tradition of students of ḥadīth for beginners and for those teaching them.</li>
+<li>Familiarity with the isnād system and the importance of the isnād in Islam and in the pursuit of truth generally.</li>
+<li>Familiarity with the narrators of hadith and their status as narrators.</li>
+<li>Familiarity with some lesser-known treasures and special features of ḥadīth collections.</li>
+</ul>
+
+<p><b>The famous ḥadīth compilations and the number of thulāthiyyāt reports they contain</b>, which are a combination of marfu’ and mawqūf, as well as varying levels of authenticity:</p>
+<table style="border-collapse: collapse;">
+<tbody>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad Sufyān al-Thawrī (d. 161)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">105</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Muwaṭṭaʾ Mālik (d. 179)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">364</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad ʿAbdullāh ibn al-Mubārak (d. 181 H)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">99</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad al-Muʿāfā al-Mawṣilī (d. 185) and Kitāb al-Zuhd</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">47</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad al-Shāfiʿī (d. 204)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">304</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad Abū Dāwūd al-Ṭayālisī (d. 204 H)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">785</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Saʿīd ibn Manṣūr (d. 227 H)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">185</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad Isḥāq ibn Rāhwayh (d. 238)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">5</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad Aḥmad ibn Ḥanbal (d. 241)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">332</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Musnad al-Kashshī (d. 249)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">51</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Sunan al-Dārimī (d. 255)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">15</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Ṣaḥīḥ al-Bukhārī (d. 256)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">22</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Sunan Ibn Mājah (d. 273)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">5</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">Jāmiʿ al-Tirmidhī (d. 279)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">1</td></tr>
+<tr><td style="border: 1px solid #ddd; padding: 6px 8px;">al-Ṭabarānī's al-Muʿjam al-Ṣaghīr (d. 360)</td><td style="border: 1px solid #ddd; padding: 6px 8px; text-align: right;">3</td></tr>
+</tbody>
+</table>
+
+<p><b>A note on scope:</b> this collection focuses on ḥadīth compiled by the latter 8 compilations in the list above: Isḥāq ibn Rāhwayh, Aḥmad ibn Ḥanbal, al-Kashshī, al-Dārimī, al-Bukhārī, Ibn Mājah, al-Tirmidhī, and al-Ṭabarānī. A thulāthī chain is remarkable in proportion to how far the compiler lived from the era of the Prophet ﷺ — three narrators is an unusually short chain for someone writing in the mid-third century AH, but unremarkable for a scholar one or two generations closer to the Companions, such as Abū Ḥanīfah or Mālik. For that reason, and because several of the earlier surveyed works are either not the author's own direct compilation (e.g., the various later collections gathered under the name Musnad Abī Ḥanīfah) or mix in mursal and non-prophetic material (e.g., the Muwaṭṭaʾ), this collection is restricted to the compilations above.</p>
+
+<p>Note: There are no thulāthiyyāt narrations found in famous compilations like Ṣaḥīḥ Muslim (d. 261), Sunan Abū Dāwūd (d. 275), and Sunan al-Nasāʾī (d. 303).</p>
+
+<p>The above list contains thulāthiyyāt attributed to different compilers of ḥadīth, but it does not necessarily mean that they are all authentic reports, as some weak reports are found even within the compilations surveyed here. An analysis and study of thulāthiyyāt is only valuable if it includes the grading of each report (e.g., ṣaḥīḥ, ḥasan, ḍaʿīf, etc.) — this collection grades every report accordingly.</p>
+
+<p>The thulāthiyyāt of al-Bukhārī were compiled by Imam Ibn Ḥajar al-ʿAsqalānī (RA) in a separate volume. In 1421 AH, Muḥammad ibn ʿAbd al-Dāʾim al-Shāfiʿī wrote a commentary on these thulāthiyyāt. Shaykh ʿAlī Sulṭān al-Qārī al-Harawī (Mullā ʿAlī al-Qārī) also wrote a book of notes (taʿlīqāt) on the thulāthiyyāt of Ṣaḥīḥ al-Bukhārī. Shaykh Yūsuf al-Kittānī likewise wrote a book on Ṣaḥīḥ al-Bukhārī titled Rubāʿiyyāt al-Imām al-Bukhārī.</p>
+
+<p>Interestingly, Imam al-Bukhārī related half of his thulāthiyyāt through his teacher al-Makkī ibn Ibrāhīm (RA). Shaykh al-Makkī ibn Ibrāhīm was a student of Imam Abū Ḥanīfah (RA) and a great ḥadīth scholar of his time. Imam Aḥmad ibn Ḥanbal also narrates ḥadīth from al-Makkī ibn Ibrāhīm, as does Yaḥyā ibn Yaḥyā al-Laythī. The thulāthiyyāt of Imams al-Bukhārī and Aḥmad ibn Ḥanbal are the most well-known collections of this kind.</p>
+
+<p>I ask Allah SWT to make this short collection one of great benefit to the ummah, scholars and students of knowledge alike, and a source of nearness to Allah SWT and His Messenger ﷺ, and to reward all who assisted in its compilation, editing, translation, hadith analysis, and publication.</p>
+
+<p>Suleiman Hani</p>
+
+<?php if ($thulathiyyatIntroCollapsible) { ?>
+<a class="button_expand" onclick="jQuery(this).closest('.collapsible').toggleClass('collapsed')"></a>
+<?php } ?>
+</div>

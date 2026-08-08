@@ -1,0 +1,43 @@
+<div class="about">
+<div class=content>
+<br>
+<p align=center style="font-size: 16px;"><b>View our more detailed <a href="/changelog">changelog</a>.</b></p>
+May 2026: Added <a href="/ibnkhuzayma">Sahih ibn Khuzayma</a>, <a href="/ibnhibban">Sahih ibn Hibban</a>, <a href="/hakim">Mustadrak al-Hakim</a>, <a href="/ibnabishayba">Musannaf ibn Abi Shayba</a>, <a href="/abdurrazzaq">Musannaf Abd ar-Razzaq</a>, <a href="/daraqutni">Sunan ad-Daraqutni</a>, <a href="/bayhaqi">Sunan al-Bayhaqi</a>, and <a href="/nasaikubra">Sunan an-Nasa'i al-Kubra</a>.<br>
+<br>
+April 2026: Added information for almost 50,000 narrators.<br>
+<br>
+March 2025: Added a new collection: <a href="/virtues">Special Virtues of the Qur'an's Chapters and Verses</a>.<br>
+<br>
+February 2024: Upgraded search. You can now search by collection and hadith number. For results only from Sahih al-Bukhari for example, add "collection:bukhari" to your query.<br>
+<br>
+January 2024: Completed adding the Bangla translation for <a href="/bukhari">Sahih al-Bukhari</a>. Sahih Muslim is next in sha Allah.<br>
+<br>
+March 2023: Added an Arabic-only collection: <a href="/darimi">Sunan ad-Darimi</a>.<br>
+<br>
+28 May 2020: Beginning a new collection: <a href="/ahmad">Musnad Ahmad</a>.<br>
+<br>
+23 January 2020: <a href="/bulugh">Bulugh al-Maram</a> is now complete.<br>
+<br>
+23 December 2019: <a href="/adab">Al-Adab al-Mufrad</a> is now complete.<br>
+<br>
+2 June 2013: <a href="/ibnmajah">Sunan ibn Majah</a> is now complete. The Six Books of Hadith are now complete on sunnah.com, alhamdulillah!<br>
+<br>
+5 December 2012: We are beginning to add <b>Urdu</b> translations of Sahih al-Bukhari! Click on 
+the languages checkbox to the left of the book display page.<br>
+5 December 2012: <a href="/nasai">Sunan an-Nasa'i</a> is now complete.<br>
+<br>
+25 November 2012: Beginning a new collection: <a href="/bulugh">Bulugh al-Maram</a> by Imam Ibn Hajr al-Asqalani (ra).<br>
+<br>
+22 October 2012: <a href="/abudawud">Sunan Abi Dawud</a> now has grades for all hadith. We will be manually verifying them in the next month and a half inshaAllah.<br>
+<br>
+12 September 2012: <a href="/abudawud">Sunan Abi Dawud</a> is now <b>complete</b>, alhamdulillah.<br>
+<br>
+28 August 2012: Beginning a new collection: <a href="/adab">Al-Adab Al-Mufrad</a> by Imam al-Bukhari (ra).<br>
+<br>
+8 July 2012: The first half of Sahih al-Bukhari is now available in <b>Bahasa Indonesia</b> translation! Click on 
+the languages checkbox to the left.<br>
+<br>
+14 November 2011: Moved to <a href="http://sunnah.com/">sunnah.com</a>!<br>
+</div>
+
+</div>

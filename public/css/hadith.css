@@ -185,6 +185,12 @@
 	overflow: auto;
 }
 
+.gradetable {
+	width: 100%;
+	table-layout: fixed;
+	box-sizing: border-box;
+}
+
 .top_link a span {
     float: left;
     width: 11px;
@@ -202,10 +208,100 @@ a.action_toTop:hover span   { background-position: -11px 0; }
 	font-family: Verdana; 
 	padding-top: 10px;
 	text-align: left;
+	overflow-wrap: anywhere;
 }
 
 .arabic_grade {
 	vertical-align: top; 
 	direction: rtl; 
+	text-align: right;
+	overflow-wrap: anywhere;
+}
+
+.gradetable .grade_label {
+	width: 64px;
+	white-space: nowrap;
+	overflow-wrap: normal;
+}
+
+.grade_detail_toggle {
+	display: inline-flex;
+	align-items: baseline;
+	margin-left: 6px;
+	vertical-align: baseline;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+	direction: ltr;
+	text-align: left;
+	max-width: 100%;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--link-color, rgb(93, 128, 128));
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.arabic_grade .grade_detail_toggle {
+	margin-left: 0;
+	margin-right: 6px;
+}
+
+.grade_detail_toggle:focus {
+	outline: 1px dotted var(--link-color, rgb(93, 128, 128));
+	outline-offset: 2px;
+}
+
+.grade_detail_marker {
+	display: inline-block;
+	min-width: 25px;
+}
+
+.grade_detail_marker::before {
+	content: "[+]";
+}
+
+.grade_detail_toggle.is_open .grade_detail_marker::before {
+	content: "[-]";
+}
+
+.grade_detail_label {
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+.grade_detail_panels {
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.grade_detail_text {
+	margin-top: 6px;
+	padding: 8px 10px;
+	border-left: 3px solid var(--sticky-color, #90b8b9);
+	background: var(--secondry_block_bg, rgba(255, 255, 255, 0.5));
+	color: var(--primary-text-color, inherit);
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	overflow-wrap: anywhere;
+	white-space: normal;
+}
+
+.grade_detail_panel.arabic {
+	border-left: 0;
+	border-right: 3px solid var(--sticky-color, #90b8b9);
+	direction: rtl;
 	text-align: right;
 }

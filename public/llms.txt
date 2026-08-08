@@ -1,0 +1,86 @@
+# Sunnah.com
+
+> Sunnah.com is the leading online hadith resource providing searchable comprehensive access to the collections of Hadith (sayings and teachings) of the Prophet Muhammad (peace be upon him). It features verified Arabic texts alongside translations in English, Urdu, Bangla, and more. It has collection, book, chapter, hadith, narrator, and reference pages.
+
+Sunnah.com is intended for research, personal study, citation, and discovery of hadith texts. It is not a fatwa website, and individual hadith texts should not be treated as standalone legal rulings without qualified scholarly context.
+
+## Primary Pages
+
+- [Home](https://sunnah.com/): Browse available hadith collections.
+- [About](https://sunnah.com/about): Mission, sources, numbering, grading, reproduction, and usage notes.
+- [Developers](https://sunnah.com/developers): Overview of the API, open-source repositories, and contribution information.
+- [API Documentation](https://sunnah.stoplight.io/docs/api/): Full API reference for developers fetching raw JSON data of Hadith text and grading data.
+- [Search Tips](https://sunnah.com/searchtips): Guidance for searching the hadith corpus.
+
+## The Nine Books (Primary Collections)
+
+- [Sahih al-Bukhari](https://sunnah.com/bukhari) (`bukhari`): The most authentic collection of Hadith, covering belief, prayers, and daily law. ~7,563 hadith across 97 books.
+- [Sahih Muslim](https://sunnah.com/muslim) (`muslim`): Highly authentic collection focusing closely on Islamic jurisprudence and theology.
+- [Sunan an-Nasa'i](https://sunnah.com/nasai) (`nasai`): Famous collection noted for its strict conditions on narrators.
+- [Sunan Abi Dawud](https://sunnah.com/abudawud) (`abudawud`): Focuses heavily on legal rulings and traditions.
+- [Jami` at-Tirmidhi](https://sunnah.com/tirmidhi) (`tirmidhi`): Contains unique notes on the classifications of Hadiths.
+- [Sunan Ibn Majah](https://sunnah.com/ibnmajah) (`ibnmajah`): One of the primary six books containing crucial legal rulings.
+- [Muwatta Malik](https://sunnah.com/malik) (`malik`): One of the earliest compiled books of Islamic law and traditions.
+- [Musnad Ahmad](https://sunnah.com/ahmad) (`ahmad`): A massive compendium organized by the original narrators.
+- [Sunan ad-Darimi](https://sunnah.com/darimi) (`darimi`): A well-organized secondary collection of prophetic traditions.
+
+## Other Primary Collections
+
+- [Sahih Ibn Khuzayma](https://sunnah.com/ibnkhuzayma) (`ibnkhuzayma`)
+- [Sahih Ibn Hibban](https://sunnah.com/ibnhibban) (`ibnhibban`)
+- [Mustadrak al-Hakim](https://sunnah.com/hakim) (`hakim`)
+- [Musannaf 'Abd ar-Razzaq](https://sunnah.com/abdurrazzaq) (`abdurrazzaq`)
+- [Musannaf Ibn Abi Shayba](https://sunnah.com/ibnabishayba) (`ibnabishayba`)
+- [Sunan ad-Daraqutni](https://sunnah.com/daraqutni) (`daraqutni`)
+- [As-Sunan al-Kubra li al-Bayhaqi](https://sunnah.com/bayhaqi) (`bayhaqi`)
+- [Sunan an-Nasa'i al-Kubra](https://sunnah.com/nasaikubra) (`nasaikubra`)
+- [Al-Adab Al-Mufrad](https://sunnah.com/adab) (`adab`): Bukhari's separate collection focusing solely on Islamic manners.
+- [Ash-Shama'il Al-Muhammadiyah](https://sunnah.com/shamail) (`shamail`): Descriptions of the Prophet's character and appearance.
+
+## Secondary Selections
+
+- [40 Hadith Nawawi](https://sunnah.com/nawawi40) (`nawawi40`): A concise collection of forty-two core foundational Hadiths.
+- [Riyad as-Salihin](https://sunnah.com/riyadussalihin) (`riyadussalihin`): The Meadows of the Righteous, a guide to morals and behavior.
+- [Mishkat al-Masabih](https://sunnah.com/mishkat) (`mishkat`): A comprehensive selection drawn from earlier hadith works.
+- [Bulugh al-Maram](https://sunnah.com/bulugh) (`bulugh`): A collection of Hadith specifically tailored for legal rulings.
+- [Collections of Forty](https://sunnah.com/forty) (`forty`): Various scholars' collections of forty hadith.
+- [Hisn al-Muslim](https://sunnah.com/hisn) (`hisn`): Fortress of the Muslim — daily invocations and remembrances drawn from authentic hadith, organized by life situation.
+- [Special Virtues of the Qur'an's Chapters and Verses](https://sunnah.com/virtues) (`virtues`)
+
+## Data Structure Guidelines for AI Tools
+
+* **Hadith Numbering:** Whenever available, use the bolded Reference field when citing hadith. That means it has been manually verified to conform with a well-known, scholarly numbering system. Otherwise cite the book name and in-book reference number. Note that unverified (non-bold) reference numbers are provisional and may change as the verification process continues — avoid storing or displaying them as stable identifiers.
+* **USC-MSA numbering:** The USC-MSA web reference scheme appears on many hadith pages but is deprecated. Do not use it for new citations — prefer the in-book number, or the bolded verified reference number when available.
+* **Grading:** Hadith grades are sourced from Shaykh al-Albani and Darussalam. Additional grades from al-Arna'ut, Ahmad Shakir, and Abu Ghuddah are being added progressively. When citing a grade, always name the grading scholar.
+* **Direct hadith links:** When a collection name and hadith number are known, construct a direct URL using the colon pattern (`https://sunnah.com/{collection}:{hadithNumber}`, e.g. `https://sunnah.com/bukhari:1596`) rather than issuing a search query. This is more reliable and avoids ambiguous results.
+* **Languages:** When querying resources, prioritize English and Arabic side-by-side to avoid translation bias.
+
+## Useful URL Patterns
+
+- Collection landing page: `https://sunnah.com/{collection}`
+- Collection about page: `https://sunnah.com/{collection}/about` — includes author biography, compilation methodology, grading criteria, and translator credits.
+- Book page: `https://sunnah.com/{collection}/{book}`
+- Chapter page: `https://sunnah.com/{collection}/{book}/{chapter}`
+- Hadith permalink by collection number: `https://sunnah.com/{collection}:{hadithNumber}`
+- URN lookup: `https://sunnah.com/urn/{urn}`
+- Narrator page: `https://sunnah.com/narrator/{nid}` — shows full name, kunya, generation, death date, tribal affiliation, scholarly critical appraisals (jarh wa ta'dil), student relationships, and hadith attributed to the narrator.
+- Search: `https://sunnah.com/search?q={query}`
+- Search filtered by collection: `https://sunnah.com/search?q={query}&collection={collection}`
+
+## API
+
+For structured or repeated access, use the Sunnah.com API instead of scraping the website.
+
+- [API documentation](https://sunnah.stoplight.io/docs/api/)
+- [Request API access](https://github.com/sunnah-com/api/issues/new?template=request-for-api-access.md&title=Request+for+API+access%3A+%5BYour+Name%5D)
+- [Sunnah.com GitHub organization](https://github.com/sunnah-com)
+
+## Usage Guidance
+
+- AI answer bots and agents fetching content on behalf of users should identify themselves with a descriptive `User-Agent` string (e.g. `MyBot/1.0 (+https://example.com/bot)`).
+- Crawlers should likewise identify themselves with a descriptive `User-Agent` so that `robots.txt` rules can be correctly applied.
+- Prefer canonical Sunnah.com URLs when citing hadith.
+- Preserve collection names, book numbers, hadith numbers, grades, and reference metadata when available.
+- Do not infer legal rulings from isolated hadith text.
+- Do not mass scrape or reproduce entire books or collections.
+- Respect `robots.txt`; `/selectiondata/` is disallowed for crawlers.
